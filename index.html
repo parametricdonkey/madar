@@ -1,220 +1,188 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
+<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
 <!-- three.js library -->
-<script src='vendor/three.js/build/three.min.js'></script>
-<!-- three.js load GLTF -->
-<script src='vendor/three.js/GLTFLoader.js'></script>
-<!-- ar.js -->
-<script src='../build/ar-threex-nft.js'></script>
+<script src='../examples/vendor/three.js/build/three.js'></script>
+<!-- include ar.js -->
+<script src="../build/ar.js"></script>
 
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<script>ARjs.Context.baseURL = '../'</script>
 
-<body style='position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin : 0px; overflow: hidden;'>
-    <style>
-        .arjs-loader {
-            margin: 0 auto;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .arjs-loader-spinner {
-            z-index: 10;
-            -webkit-transform: spin 1s linear infinite;
-            animation: spin 1s linear infinite;
-            border: 3px solid #ddd;
-            border-top: 3px solid #42a5f5;
-            border-radius: 50%;
-            height: 75px;
-            width: 75px;
-        }
-
-        @-webkit-keyframes spin {
-            to {
-                border-top-color: #42a5f5;
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            to {
-                border-top-color: #42a5f5;
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-    <div class="arjs-loader">
-        <div class="arjs-loader-spinner"></div>
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+    <div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
+        <a href='https://github.com/AR-js-org/AR.js/' target='_blank'>AR.js</a> - Session API demo with multi
+        tracking and hit testing
+        - by <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
+        <br />
+        <a href='../../three.js/examples/multi-markers/markers-page/' target='_blank'>Markers page</a>
+        <br />
+        <strong>Tracking Backend:</strong>
+        <a href='?artoolkit'>artoolkit</a>
+        /
+        <a href='?area-artoolkit'>area artoolkit</a>
+        /
+        <a href='?best'>best</a>
     </div>
     <script>
-        //////////////////////////////////////////////////////////////////////////////////
-        //		Init
-        //////////////////////////////////////////////////////////////////////////////////
-
-        var renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: true,
-            precision: 'mediump',
-        });
-
-        var clock = new THREE.Clock();
-
-        var mixers = [];
-
-        renderer.setPixelRatio(window.devicePixelRatio);
-
-        renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.domElement.style.position = 'absolute'
-        renderer.domElement.style.top = '0px'
-        renderer.domElement.style.left = '0px'
-        document.body.appendChild( renderer.domElement );
-
-        // init scene and camera
-        var scene = new THREE.Scene();
-
-        //////////////////////////////////////////////////////////////////////////////////
-        //		Initialize a basic camera
-        //////////////////////////////////////////////////////////////////////////////////
-
-        // Create a camera
-        var camera = new THREE.Camera();
-        scene.add(camera);
-
-        var light = new THREE.AmbientLight(0xffffff);
-        scene.add(light);
-
-        ////////////////////////////////////////////////////////////////////////////////
-        //          handle arToolkitSource
-        ////////////////////////////////////////////////////////////////////////////////
-
-        var arToolkitSource = new THREEx.ArToolkitSource({
-            sourceType : 'webcam',
-            sourceWidth: 480,
-            sourceHeight: 640,
-        })
-
-        arToolkitSource.init(function onReady(){
-            // use a resize to fullscreen mobile devices
-            setTimeout(function() {
-                onResize()
-            }, 1000);
-        })
-
-        // handle resize
-        window.addEventListener('resize', function(){
-            onResize()
-        })
-
-        // listener for end loading of NFT marker
-        window.addEventListener('arjs-nft-loaded', function(ev){
-          console.log(ev);
-        })
-
-        function onResize(){
-            arToolkitSource.onResizeElement()
-            arToolkitSource.copyElementSizeTo(renderer.domElement)
-            if( arToolkitContext.arController !== null ){
-                arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////
-        //          initialize arToolkitContext
-        ////////////////////////////////////////////////////////////////////////////////
-
-        // create atToolkitContext
-        var arToolkitContext = new THREEx.ArToolkitContext({
-            detectionMode: 'mono',
-            canvasWidth: 480,
-            canvasHeight: 640,
-        }, {
-            sourceWidth: 480,
-            sourceHeight: 640,
-        })
-
-        // initialize it
-        arToolkitContext.init(function onCompleted(){
-            // copy projection matrix to camera
-            camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
-        })
-
-        ////////////////////////////////////////////////////////////////////////////////
-        //          Create a ArMarkerControls
-        ////////////////////////////////////////////////////////////////////////////////
-
-        // init controls for camera
-        var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
-            type : 'nft',
-            descriptorsUrl : 'data/dataNFT/pinball',
-            changeMatrixMode: 'cameraTransformMatrix'
-        })
-
-        scene.visible = false
-
-        var root = new THREE.Object3D();
-        scene.add(root);
-
-        //////////////////////////////////////////////////////////////////////////////////
-        //		add an object in the scene
-        //////////////////////////////////////////////////////////////////////////////////
-
-        var threeGLTFLoader = new THREE.GLTFLoader();
-        var model;
-
-        threeGLTFLoader.load("./resources/Flamingo.glb", function (gltf) {
-            model = gltf.scene.children[0];
-            model.name = 'Flamingo';
-
-            var animation = gltf.animations[0];
-            var mixer = new THREE.AnimationMixer(model);
-            mixers.push(mixer);
-            var action = mixer.clipAction(animation);
-            action.play();
-
-            root.matrixAutoUpdate = false;
-            root.add(model);
-
-            model.position.z = -200;
-            model.position.x = 100;
-            model.position.y = 100;
+            ; (function () {
+                // get tracking method from location.search
+                var trackingMethod = location.search.substring(1) ? location.search.substring(1) : 'best'
 
 
-            //////////////////////////////////////////////////////////////////////////////////
-            //		render the whole thing on the page
-            //////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
+                //		Init
+                //////////////////////////////////////////////////////////////////////////////////
 
-            var animate = function() {
-                requestAnimationFrame(animate);
+                // init renderer
+                var renderer = new THREE.WebGLRenderer({
+                    antialias: true,
+                    alpha: true
+                });
+                renderer.autoClear = false;
+                renderer.setClearColor(new THREE.Color('lightgrey'), 0)
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.domElement.style.position = 'absolute'
+                renderer.domElement.style.top = '0px'
+                renderer.domElement.style.left = '0px'
+                document.body.appendChild(renderer.domElement);
 
-                if (mixers.length > 0) {
-                    for (var i = 0; i < mixers.length; i++) {
-                        mixers[i].update(clock.getDelta());
+                // array of functions for the rendering loop
+                var onRenderFcts = [];
+
+                // init scene and camera
+                var scene = new THREE.Scene();
+
+                //////////////////////////////////////////////////////////////////////////////////
+                //		Initialize the camera
+                //////////////////////////////////////////////////////////////////////////////////
+
+                var camera = ARjs.Utils.createDefaultCamera(trackingMethod)
+                scene.add(camera)
+
+                ////////////////////////////////////////////////////////////////////////////////
+                //          	Set up Arjs.Profile
+                ////////////////////////////////////////////////////////////////////////////////
+
+                var arProfile = new ARjs.Profile()
+                    .sourceWebcam()
+                    .trackingMethod(trackingMethod)
+                    // .changeMatrixMode('modelViewMatrix')
+                    // .changeMatrixMode('cameraTransformMatrix')
+                    .defaultMarker()
+                    .checkIfValid()
+
+                //////////////////////////////////////////////////////////////////////////////
+                //		build ARjs.Session
+                //////////////////////////////////////////////////////////////////////////////
+
+                var arSession = new ARjs.Session({
+                    scene: scene,
+                    renderer: renderer,
+                    camera: camera,
+                    sourceParameters: arProfile.sourceParameters,
+                    contextParameters: arProfile.contextParameters
+                })
+                onRenderFcts.push(function () {
+                    arSession.update()
+                })
+
+                ////////////////////////////////////////////////////////////////////////////////
+                //          Create a ARjs.Anchor
+                ////////////////////////////////////////////////////////////////////////////////
+
+                var arAnchor = new ARjs.Anchor(arSession, arProfile.defaultMarkerParameters)
+                onRenderFcts.push(function () {
+                    arAnchor.update()
+                })
+
+                //////////////////////////////////////////////////////////////////////////////
+                //                handle Hit Tester
+                //////////////////////////////////////////////////////////////////////////////
+
+                var hitTesting = new ARjs.HitTesting(arSession)
+                onRenderFcts.push(function () {
+                    hitTesting.update(camera, arAnchor.object3d, arAnchor.parameters.changeMatrixMode)
+                })
+
+                //////////////////////////////////////////////////////////////////////////////////
+                //		add an object to the arAnchor
+                //////////////////////////////////////////////////////////////////////////////////
+                var arWorldRoot = arAnchor.object3d
+
+                var mesh = new THREE.AxesHelper()
+                arWorldRoot.add(mesh)
+
+                // add a torus knot
+                var geometry = new THREE.BoxGeometry(1, 1, 1);
+                var material = new THREE.MeshNormalMaterial({
+                    transparent: true,
+                    opacity: 0.5,
+                    side: THREE.DoubleSide
+                });
+                var mesh = new THREE.Mesh(geometry, material);
+                mesh.position.y = geometry.parameters.height / 2
+                arWorldRoot.add(mesh);
+
+                var geometry = new THREE.TorusKnotGeometry(0.3, 0.1, 64, 16);
+                var material = new THREE.MeshNormalMaterial();
+                var mesh = new THREE.Mesh(geometry, material);
+                mesh.position.y = 0.5
+                arWorldRoot.add(mesh);
+
+                onRenderFcts.push(function (delta) {
+                    mesh.rotation.x += Math.PI * delta
+                })
+
+                //////////////////////////////////////////////////////////////////////////////
+                //		DebugUI
+                //////////////////////////////////////////////////////////////////////////////
+
+                // create arjsDebugUIContainer if needed
+                if (document.querySelector('#arjsDebugUIContainer') === null) {
+                    var domElement = document.createElement('div')
+                    domElement.id = 'arjsDebugUIContainer'
+                    domElement.setAttribute('style', 'position: fixed; bottom: 10px; width:100%; text-align: center; z-index: 1;color: grey;')
+                    document.body.appendChild(domElement)
+                }
+
+
+                var sessionDebugUI = new ARjs.SessionDebugUI(arSession, null)
+                document.querySelector('#arjsDebugUIContainer').appendChild(sessionDebugUI.domElement)
+
+                var anchorDebugUI = new ARjs.AnchorDebugUI(arAnchor)
+                document.querySelector('#arjsDebugUIContainer').appendChild(anchorDebugUI.domElement)
+
+                //////////////////////////////////////////////////////////////////////////////////
+                //		render the whole thing on the page
+                //////////////////////////////////////////////////////////////////////////////////
+
+                // render the scene
+                onRenderFcts.push(function () {
+                    // Render the see through camera scene
+                    renderer.clear()
+
+                    // render hitTesting pickingPlane - for debug
+                    var renderHitTestingPickingPlane = true
+                    if (renderHitTestingPickingPlane && hitTesting._hitTestingPlane) {
+                        hitTesting._hitTestingPlane.renderDebug(renderer)
                     }
-                }
 
-                if (!arToolkitSource.ready) {
-                    return;
-                }
+                    renderer.render(scene, camera);
+                })
 
-                arToolkitContext.update( arToolkitSource.domElement )
-
-                // update scene.visible if the marker is seen
-                scene.visible = camera.visible;
-
-                renderer.render(scene, camera);
-            };
-
-            requestAnimationFrame(animate);
-        }
-    );
+                // run the rendering loop
+                var lastTimeMsec = null
+                requestAnimationFrame(function animate(nowMsec) {
+                    // keep looping
+                    requestAnimationFrame(animate);
+                    // measure time
+                    lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60
+                    var deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
+                    lastTimeMsec = nowMsec
+                    // call each update function
+                    onRenderFcts.forEach(function (onRenderFct) {
+                        onRenderFct(deltaMsec / 1000, nowMsec / 1000)
+                    })
+                })
+            })()
     </script>
 </body>

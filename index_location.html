@@ -1,37 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-        <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-        <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-    </head>
 
-    <body style="margin: 0; overflow: hidden;">
-        <a-scene
-            renderer="logarithmicDepthBuffer: true;"
-            embedded
-            loading-screen="enabled: false;"
-            arjs="sourceType: webcam; debugUIEnabled: false;"
-        >
-            <a-assets>
-                <a-asset-item
-                    id="animated-asset"
-                    src="assets/asset.gltf"
-                ></a-asset-item>
-            </a-assets>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+</head>
 
-                <a-entity
-                    look-at="[gps-camera]"
-                    animation-mixer="loop: repeat"
-                    gltf-model="#animated-asset"
-                    scale="1 1 1"
-                    gps-entity-place="latitude: 45.53241; longitude: 9.40657;"
-                ></a-entity>
+<body>
+    <video id='video1' autoplay playsinline style='display:none'></video>
+    <canvas id="canvas1" style='background-color: black; width:100%; height:100%; display:block'></canvas>
+    <script src='vendor/three.js/build/three.js'></script>
+    <script src="build/ar-threex-location-only.js"></script>
+    <script src="index_location.js"></script>
+</body>
 
-            <a-camera gps-camera rotation-reader></a-camera>
-        </a-scene>
-    </body>
 </html>

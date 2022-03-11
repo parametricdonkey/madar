@@ -82,6 +82,7 @@ const onXRFrame = (time, frame) => {
     }
 }
 
-session.requestAnimationFrame(onXRFrame);
+// session.requestAnimationFrame(onXRFrame);
+XRSession.requestAnimationFrame(onXRFrame);
 
 

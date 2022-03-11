@@ -27,7 +27,6 @@
 		//		Init
 		//////////////////////////////////////////////////////////////////////////////////
 
-		import { GLTFLoader } from 'vendor/three.js/GLTFLoader';
 
 		// init renderer
 		var renderer = new THREE.WebGLRenderer({
@@ -194,7 +193,7 @@
 		// })
 
 
-		const loader = new GLTFLoader();
+		const loader = new THREE.GLTFLoader();
 		loader.load('gltf/model.gltf', function (gltf) {
 			scene.add(gltf.scene);
 		}, undefined, function (error) {

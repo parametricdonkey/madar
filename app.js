@@ -37,7 +37,7 @@ class App {
   activateXR = async () => {
     try {
       // Initialize a WebXR session using "immersive-ar".
-      this.xrSession = await navigator.xr.requestSession("immersive-ar", { requiredFeatures: ["hit-test", "dom-overlay"], domOverlay: { root: document.body } });
+      this.xrSession = await navigator.xr.requestSession("immersive-ar", { requiredFeatures: ["hit-test", "dom-overlay", "anchors", "plane-detection"], domOverlay: { root: document.body } });
 
 
 

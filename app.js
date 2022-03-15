@@ -76,7 +76,8 @@ class App {
     this.setupThreeJs();
 
     // Setup an XRReferenceSpace using the "local" coordinate system.
-    this.localReferenceSpace = await this.xrSession.requestReferenceSpace("local");
+    // this.localReferenceSpace = await this.xrSession.requestReferenceSpace("local");
+    this.localReferenceSpace = await this.xrSession.requestReferenceSpace("unbounded");
 
     // Create another XRReferenceSpace that has the viewer as the origin.
     this.viewerSpace = await this.xrSession.requestReferenceSpace("viewer");

@@ -28,7 +28,7 @@ class Reticle extends THREE.Object3D {
       this.add(gltf.scene);
     })
 
-    this.visible = false;
+    this.visible = true;
   }
 }
 

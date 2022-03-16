@@ -25,22 +25,31 @@
     
     >
     <button slot="hotspot-1" data-position="-0.54 0.93 0.1" data-normal="-0.73 0.05 0.69">
-        <div id="annotation">This hotspot disappears completely</div>
+        <div id="annotation">This hotspot disappears <a href="https:\\www.cnn.com\" target="_blank">completely</a></div>
       </button>
 
 
     </model-viewer>
 
-    <!-- <model-viewer 
-    id="model" 
-    data-name="model" 
-    src="assets/model.gltf" 
-    ar ar-modes="scene-viewer quick-look"
-    
-    camera-controls 
-    auto-rotate 
-    style="background-color: unset"
-    ></model-viewer> -->
+    <script type="module">
+        const modelViewer = document.querySelector("model-viewer#model");
+        
+        modelViewer.addEventListener("load", () => {
+        
+          const changeColor = async (event) => {
+            let material = modelViewer.materialFromPoint(event.clientX, event.clientY);
+        
+            if(material != null) {
+              material.pbrMetallicRoughness.
+                setBaseColorFactor([Math.random(), Math.random(), Math.random()]);
+            }
+          }
+        
+          modelViewer.addEventListener("click", changeColor);
+        
+        });
+        
+        </script>
 
 
 </body>

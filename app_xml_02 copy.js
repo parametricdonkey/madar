@@ -109,9 +109,8 @@ function createTable(data, tableName) {
 
 function auth() {
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "text/plain");
-    //myHeaders.append("Content-Type", "application/json");
-
+    // myHeaders.append("Content-Type", "text/plain");
+    myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
         "client_id": "infinite",
@@ -122,9 +121,8 @@ function auth() {
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
-        body: raw,
-        mode: 'no-cors'
-        //,redirect: 'follow'
+        body: raw,        
+        redirect: 'follow'
     };
 
     fetch("https://infinite.oneteam.it/api/api/Auth", requestOptions)

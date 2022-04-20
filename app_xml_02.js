@@ -69,14 +69,26 @@ function buildSurfaceList(x) {
                 //openings
                 if (tag[i].childNodes[j].nodeName == 'Opening') {
                     let opening = {};
-                    opening.type = tag[i].childNodes[j].getAttribute('openingType');
-                    opening.Id = tag[i].childNodes[j].getAttribute('id');
-                    opening.width = tag[i].childNodes[j].getElementsByTagName('Width')[0].innerHTML;
-                    opening.height = tag[i].childNodes[j].getElementsByTagName('Height')[0].innerHTML;
-                    opening.CADObjID = tag[i].childNodes[j].getElementsByTagName('CADObjectId')[0].innerHTML;
-                    opening.name = tag[i].childNodes[j].getElementsByTagName('Name')[0].innerHTML;
-                    opening.area = Number(opening.width) * Number(opening.height);
-                    openingList.push(opening);
+                    if(tag[i].childNodes[j].getAttribute('openingType')!='Air'){
+                        opening.type = tag[i].childNodes[j].getAttribute('openingType');
+                        opening.Id = tag[i].childNodes[j].getAttribute('id');
+                        opening.width = tag[i].childNodes[j].getElementsByTagName('Width')[0].innerHTML;
+                        opening.height = tag[i].childNodes[j].getElementsByTagName('Height')[0].innerHTML;
+                        opening.CADObjID = tag[i].childNodes[j].getElementsByTagName('CADObjectId')[0].innerHTML;
+                        opening.name = tag[i].childNodes[j].getElementsByTagName('Name')[0].innerHTML;
+                        opening.area = Number(opening.width) * Number(opening.height);
+                    }
+                    else{
+                        opening.type = tag[i].childNodes[j].getAttribute('openingType');
+                        opening.Id = tag[i].childNodes[j].getAttribute('id');
+                        opening.width = tag[i].childNodes[j].getElementsByTagName('Width')[0].innerHTML;
+                        opening.height = tag[i].childNodes[j].getElementsByTagName('Height')[0].innerHTML;
+                        opening.CADObjID = 'undefined';
+                        opening.name = tag[i].childNodes[j].getElementsByTagName('Name')[0].innerHTML;
+                        opening.area = Number(opening.width) * Number(opening.height);
+                    }                  
+
+                    openingList.push(opening); 
                 }
             }
         }

@@ -46,9 +46,13 @@ function buildSurfaceList(x) {
         surface.type = tag[i].getAttribute('surfaceType');
         surface.exposed = tag[i].getAttribute('exposedToSun');
         surface.Id = tag[i].getAttribute('id');
-
+        
+        //surfaces
         for (let j = 0; j < tag[i].childNodes.length; j++) {
             if (tag[i].childNodes[j].nextElementSibling != null || tag[i].childNodes[j].nodeName != '#text') {
+                if (tag[i].childNodes[j].nodeName == 'Name') {
+                    surface.name = tag[i].childNodes[j].innerHTML; 
+                }
                 if (tag[i].childNodes[j].nodeName == 'AdjacentSpaceId') {
                     surface.adjSpaceID = tag[i].childNodes[j].getAttribute('spaceIdRef');
                 }
@@ -60,40 +64,51 @@ function buildSurfaceList(x) {
                     surface.height = tag[i].childNodes[j].getElementsByTagName('Height')[0].innerHTML;
                     surface.area = Number(surface.width) * Number(surface.height);
                 }
-                if (tag[i].childNodes[j].nodeName == 'CADObjectId') {
-                    surface.CADObjID = tag[i].childNodes[j].innerHTML;
+                
+                if (tag[i].childNodes[j].nodeName == 'CADObjectId') {                    
+                    surface.CADObjID = tag[i].childNodes[j].innerHTML;                    
                 }
-                if (tag[i].childNodes[j].nodeName == 'Name') {
-                    surface.name = tag[i].childNodes[j].textContent;
-                }
-                //openings
+                
+            }
+            
+        }
+    
+        surfaceList.push(surface);
+        
+        //openings
+        for (let j = 0; j < tag[i].childNodes.length; j++) {
+            if (tag[i].childNodes[j].nextElementSibling != null || tag[i].childNodes[j].nodeName != '#text') {
+                
                 if (tag[i].childNodes[j].nodeName == 'Opening') {
                     let opening = {};
                     if(tag[i].childNodes[j].getAttribute('openingType')!='Air'){
                         opening.type = tag[i].childNodes[j].getAttribute('openingType');
+                        opening.name = tag[i].childNodes[j].getElementsByTagName('Name')[0].innerHTML;
                         opening.Id = tag[i].childNodes[j].getAttribute('id');
                         opening.width = tag[i].childNodes[j].getElementsByTagName('Width')[0].innerHTML;
                         opening.height = tag[i].childNodes[j].getElementsByTagName('Height')[0].innerHTML;
-                        opening.CADObjID = tag[i].childNodes[j].getElementsByTagName('CADObjectId')[0].innerHTML;
-                        opening.name = tag[i].childNodes[j].getElementsByTagName('Name')[0].innerHTML;
                         opening.area = Number(opening.width) * Number(opening.height);
+                        opening.CADObjID = tag[i].childNodes[j].getElementsByTagName('CADObjectId')[0].innerHTML;
+                        
+                        
                     }
                     else{
                         opening.type = tag[i].childNodes[j].getAttribute('openingType');
+                        opening.name = tag[i].childNodes[j].getElementsByTagName('Name')[0].innerHTML;
                         opening.Id = tag[i].childNodes[j].getAttribute('id');
                         opening.width = tag[i].childNodes[j].getElementsByTagName('Width')[0].innerHTML;
                         opening.height = tag[i].childNodes[j].getElementsByTagName('Height')[0].innerHTML;
-                        opening.CADObjID = 'undefined';
-                        opening.name = tag[i].childNodes[j].getElementsByTagName('Name')[0].innerHTML;
                         opening.area = Number(opening.width) * Number(opening.height);
+                        opening.CADObjID = 'undefined';
+                        
+                        
                     }                  
 
                     openingList.push(opening); 
                 }
             }
         }
-        surfaceList.push(surface);
-
+        
         //### TABLE ROW ###
         li.textContent = `${surface.type} - ${surface.exposed} - ${surface.Id} - ${surface.adjSpaceID} - ${surface.rectGeomID} - ${surface.azimuth} - ${surface.tilt} - ${surface.area} - ${surface.CADObjID} - ${surface.name}`;
         list.appendChild(li);
@@ -102,19 +117,21 @@ function buildSurfaceList(x) {
     console.log(openingList);
     console.log(Object.keys(surfaceList[0]));
     createTable(surfaceList, "surfacesTable");
-    connect();
+    createTable(openingList, "openingsTable");
+    // connect();
 }
 
 function createTable(data, tableName) {
     let sftable = document.getElementById(tableName);
     for (let i = 0; i < data.length; i++) {
         let row = sftable.insertRow(i); //a row for each surface in xml
-        for (let j = 0; j < Object.keys(data[0]).length; j++) {
+        for (let j = 0; j < Object.keys(data[0]).length+1; j++) {
             let cell = row.insertCell(j);
-            cell.innerHTML = Object.values(data[i])[j];
+            cell.innerHTML = Object.values(data[i])[j];            
         }
 
     }
+    
 
 }
 

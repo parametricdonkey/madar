@@ -10,6 +10,19 @@
     </head>
 
     <body style="margin: 0; overflow: hidden;">
+
+        <form name="login" action="login" method="post">
+            LATITUDE<br>
+            <input name="lat" type="text" placeholder="latitude" required><br><br>
+            LONGITUDE<br>
+            <input name="long" type="text" placeholder="longitude" required><br><br>
+            <button type="submit" value="submit" action="submit">Login</button>
+    
+        </form>
+
+
+
+
         <a-scene
             renderer="logarithmicDepthBuffer: true;"
             embedded
@@ -28,7 +41,7 @@
                     animation-mixer="loop: repeat"
                     gltf-model="#animated-asset"
                     scale="1 1 1"
-                    gps-entity-place="latitude: 45.455851; longitude: 9.147856;"
+                    gps-entity-place="latitude: 45.455623; longitude: 9.148442;"
                 ></a-entity>
 
             <a-camera gps-camera rotation-reader></a-camera>

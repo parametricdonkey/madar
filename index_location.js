@@ -17,14 +17,13 @@ const mesh = new THREE.Mesh(geom, material);
 const threex = new THREEx.LocationBased(scene, camera);
 const cam = new THREEx.WebcamRenderer(renderer, '#video1');
 
-// If using your own GPS location, change the lon and lat of the four meshes.
-threex.add(mesh, -0.72, 51.051); // slightly north
+threex.add(mesh, 45.532422, 9.406560); 
 const material2 = new THREE.MeshBasicMaterial({color: 0xffff00});
 const material3 = new THREE.MeshBasicMaterial({color: 0x0000ff});
 const material4 = new THREE.MeshBasicMaterial({color: 0x00ff00});
-threex.add(new THREE.Mesh(geom, material2), -0.72, 51.049); // slightly south
-threex.add(new THREE.Mesh(geom, material3), -0.722, 51.05); // slightly west
-threex.add(new THREE.Mesh(geom, material4), -0.718, 51.05); // slightly east
+threex.add(new THREE.Mesh(geom, material2), 45.532422, 9.406560); 
+threex.add(new THREE.Mesh(geom, material3), 45.532507, 9.406648); 
+threex.add(new THREE.Mesh(geom, material4), 45.532375, 9.406493); 
 
 let orientationControls;
 

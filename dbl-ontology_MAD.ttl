@@ -1,0 +1,1472 @@
+@prefix dbl: <https://data.europa.eu/dbl/def#> .
+@prefix dbl-term: <https://data.europa.eu/dbl/term#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sml: <https://w3id.org/sml/def#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs84_pos: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix locn: <http://data.europa.eu/m8g/> .
+
+<https://data.europa.eu/dbl/rdfs/def>
+  a owl:Ontology ;
+  owl:imports <https://w3id.org/sml2/rdfs/def> ;
+  owl:imports <https://data.europa.eu/dbl/skos/term> ;
+  owl:imports <http://www.w3.org/ns/dcat> ;
+  owl:imports <http://xmlns.com/foaf/0.1/> ;
+  owl:imports <http://www.opengis.net/ont/geosparql> ;
+  owl:imports <http://data.europa.eu/m8g> ;
+.
+
+# Concepts
+
+dbl:DBL-Root
+  a rdfs:Class ;
+  rdfs:subClassOf sml:SpatialRegion ;
+  rdfs:subClassOf sml:TechnicalEntity ;
+  rdfs:seeAlso dbl-term:DBL-Root ;
+.
+dbl:BuildingOrBuildingUnit
+  a rdfs:Class ;
+  rdfs:subClassOf dbl:DBL-Root ;
+  rdfs:seeAlso dbl-term:BuildingOrBuildingUnit ;
+.
+dbl:Building
+  a rdfs:Class ;
+  rdfs:subClassOf dbl:BuildingOrBuildingUnit ;
+  rdfs:seeAlso dbl-term:Building ;
+.
+dbl:BuildingUnit
+  a rdfs:Class ;
+  rdfs:subClassOf dbl:BuildingOrBuildingUnit ;
+  rdfs:seeAlso dbl-term:BuildingUnit ;
+.
+dbl:CadastralParcel
+  a rdfs:Class ;
+  rdfs:subClassOf dbl:DBL-Root ;
+  rdfs:seeAlso dbl-term:CadastralParcel ;
+.
+dbl:Address
+  a rdfs:Class ;
+  rdfs:seeAlso dbl-term:Address ;
+.
+dbl:NativeBIM
+  a rdfs:Class ;
+  rdfs:subClassOf sml:InformationObject ;
+  rdfs:subClassOf dcat:Dataset ;
+  rdfs:seeAlso dbl-term:NativeBIM ;
+.
+dbl:OpenBIM
+  a rdfs:Class ;
+  rdfs:subClassOf sml:InformationObject ;
+  rdfs:subClassOf dcat:Dataset ;
+  rdfs:seeAlso dbl-term:OpenBIM ;
+.
+dbl:NativeGIS
+  a rdfs:Class ;
+  rdfs:subClassOf sml:InformationObject ;
+  rdfs:subClassOf dcat:Dataset ;
+  rdfs:seeAlso dbl-term:NativeGIS ;
+.
+dbl:OpenGIS
+  a rdfs:Class ;
+  rdfs:subClassOf sml:InformationObject ;
+  rdfs:subClassOf dcat:Dataset ;
+  rdfs:seeAlso dbl-term:OpenGIS ;
+.
+
+# Properties (attributes)
+
+dbl:inspireId
+  a rdf:Property ;
+  rdfs:domain dbl:DBL-Root ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:inspireId ;
+.
+dbl:officialValue
+  a rdf:Property ;
+  rdfs:domain dbl:DBL-Root ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:officialValue ;
+.
+dbl:officialValueReference
+  a rdf:Property ;
+  rdfs:domain sml:QuantityValue ;
+  rdfs:range dbl:OfficialValueReferenceValue ;
+  rdfs:seeAlso dbl-term:officialValueReference ;
+.
+dbl:officialArea
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingOrBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:officialArea ;
+.
+dbl:officialAreaReference
+  a rdf:Property ;
+  rdfs:domain sml:QuantityValue ;
+  rdfs:range dbl:OfficialAreaReferenceValue ;
+  rdfs:seeAlso dbl-term:officialAreaReference ;
+.
+dbl:numberOfElevators
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfElevators ;
+.
+dbl:numberOfSwimmingPools
+  a rdf:Property ;
+  rdfs:domain dbl:DBL-Root ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfSwimmingPools ;
+.
+dbl:numberOfBalconies
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfBalconies ;
+.
+dbl:grossVolume
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:grossVolume ;
+.
+dbl:netVolume
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:netVolume ;
+.
+dbl:grossFloorArea
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:grossFloorArea ;
+.
+dbl:netFloorArea
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:netFloorArea ;
+.
+dbl:currentUse
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:currentUse ;
+.
+dbl:connectionToElectricity
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:connectionToElectricity ;
+.
+dbl:connectionToGas
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:connectionToGas ;
+.
+dbl:connectionToSewage
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:connectionToSewage ;
+.
+dbl:connectionToWater
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:connectionToWater ;
+.
+dbl:energyPerformance
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:energyPerformance ;
+.
+dbl:dateOfAssessment
+  a rdf:Property ;
+  rdfs:domain dbl:RelationReference ;
+  rdfs:range xsd:dateTime ;
+  rdfs:seeAlso dbl-term:dateOfAssessment ;
+.
+dbl:assessmentMethod
+  a rdf:Property ;
+  rdfs:domain dbl:RelationReference ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:assessmentMethod ;
+.
+dbl:circularityPerformance
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:circularityPerformance ;
+.
+dbl:smartReadinessIndicator
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:smartReadinessIndicator ;
+.
+dbl:yearlyUseOfWater
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:yeralyUseOfWater ;
+.
+dbl:yearlyReuseOfWater
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:yearlyReuseOfWater ;
+.
+dbl:yearlyUseOfGas
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:yearlyUseOfGas ;
+.
+dbl:yearlyUseOfElectricity
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:yearlyUseOfElectricity ;
+.
+dbl:numberOfRooms
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfRooms ;
+.
+dbl:heatingSource
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:heatingSource ;
+.
+dbl:heatingSystem
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:heatingSystem ;
+.
+dbl:ventilationSystem
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:ventilationSystem ;
+.
+dbl:geographicalName
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:geographicalName ;
+.
+dbl:buildingNature
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:buildingNature ;
+.
+dbl:dateOfConstruction
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:dateOfConstruction ;
+.
+dbl:dateOfRenovation
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:dateOfRenovation ;
+.
+dbl:dateOfDemolition
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:dateOfDemolition ;
+.
+dbl:elevation
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:elevation ;
+.
+dbl:elevationReference
+  a rdf:Property ;
+  rdfs:domain sml:QuantityValue ;
+  rdfs:range dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:elevationReference ;
+.
+dbl:srsName
+  a rdf:Property ;
+  rdfs:domain sml:QuantityValue ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:srsName ;
+.
+dbl:footprint
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:footprint ;
+.
+dbl:heightAboveGround
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:heightAboveGround ;
+.
+dbl:heightReference
+  a rdf:Property ;
+  rdfs:domain sml:QuantityValue ;
+  rdfs:range dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:heightReference ;
+.
+dbl:lowReference
+  a rdf:Property ;
+  rdfs:domain sml:QuantityValue ;
+  rdfs:range dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:lowReference ;
+.
+dbl:heightStatus
+  a rdf:Property ;
+  rdfs:domain sml:QuantityValue ;
+  rdfs:range dbl:HeightStatusValue ;
+  rdfs:seeAlso dbl-term:heightStatus ;
+.
+dbl:status
+  a rdf:Property ;
+  rdfs:domain sml:Objectification ;
+  rdfs:range dbl:StatusValue ;
+  rdfs:seeAlso dbl-term:status ;
+.
+dbl:assertionTimeStart
+  a rdf:Property ;
+  rdfs:domain sml:Objectification ;
+  rdfs:range xsd:dateTime ;
+  rdfs:seeAlso dbl-term:assertionTimeStart ;
+.
+dbl:assertionTimeEnd
+  a rdf:Property ;
+  rdfs:domain sml:Objectification ;
+  rdfs:range xsd:dateTime ;
+  rdfs:seeAlso dbl-term:assertionTimeEnd ;
+.
+dbl:stateTimeStart
+  a rdf:Property ;
+  rdfs:domain sml:Objectification ;
+  rdfs:range xsd:dateTime ;
+  rdfs:seeAlso dbl-term:stateTimeStart ;
+.
+dbl:stateTimeEnd
+  a rdf:Property ;
+  rdfs:domain sml:Objectification ;
+  rdfs:range xsd:dateTime ;
+  rdfs:seeAlso dbl-term:stateTimeEnd ;
+.
+dbl:heightBelowGround
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:heightBelowGround ;
+.
+dbl:roofType
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:roofType ;
+.
+dbl:conditionOfConstruction
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:conditionOfConstruction ;
+.
+dbl:numberOfBuildingUnits
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfBuildingUnits ;
+.
+dbl:numberOfDwellings
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfDwellings ;
+.
+dbl:numberOfFloorsAboveGround
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfFloorsAboveGround ;
+.
+dbl:numberOfFloorsBelowGround
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfFloorsBelowGround ;
+.
+dbl:solarSurfacePotential
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:solarSurfacePotential ;
+.
+dbl:solarSurfaceActual
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:solarSurfaceActual ;
+.
+dbl:renewableEnergyProduction
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:renewableEnergyProduction ;
+.
+dbl:numberOfEVChargingPoints
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:numberOfEVChargingPoints ;
+.
+dbl:kindOfCommunicationConnection
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:kindOfCommunicationConnection ;
+.
+dbl:materialOfFacade
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:materialOfFacade ;
+.
+dbl:materialOfRoof
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:materialOfRoof ;
+.
+dbl:materialOfStructure
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:materialOfStructure ;
+.
+dbl:uValueFacades
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:uValueFacades ;
+.
+dbl:uValueRoofs
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:uValuesRoofs ;
+.
+dbl:uValueWindows
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:uValueWindows ;
+.
+dbl:uValueFloors
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:uValueFloors ;
+.
+dbl:nationalCadastralReference
+  a rdf:Property ;
+  rdfs:domain dbl:CadastralParcel ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:natialCadastralReference ;
+.
+dbl:administrativeUnit
+  a rdf:Property ;
+  rdfs:domain dbl:CadastralParcel ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:administrativeUnit ;
+.
+dbl:hasCleanSoilStatement
+  a rdf:Property ;
+  rdfs:domain dbl:CadastralParcel ;
+  rdfs:range sml:QualityValue ;
+  rdfs:seeAlso dbl-term:hasCleanSoilStatement ;
+.
+dbl:areaValue
+  a rdf:Property ;
+  rdfs:domain dbl:CadastralParcel ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:areaValue ;
+.
+dbl:circumference
+  a rdf:Property ;
+  rdfs:domain dbl:CadastralParcel ;
+  rdfs:range sml:QuantityValue ;
+  rdfs:seeAlso dbl-term:circumference ;
+.
+dbl:adminUnit1stOrder
+  a rdf:Property ;
+  rdfs:domain dbl:Address ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:adminUnit1stOrder ;
+.
+dbl:adminUnit2ndOrder
+  a rdf:Property ;
+  rdfs:domain dbl:Address ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:adminUnit2ndOrder ;
+.
+dbl:adminUnit3rdOrder
+  a rdf:Property ;
+  rdfs:domain dbl:Address ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:adminUnit3rdOrder ;
+.
+dbl:postName
+  a rdf:Property ;
+  rdfs:domain dbl:Address ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:postname ;
+.
+dbl:thoroughfare
+  a rdf:Property ;
+  rdfs:domain dbl:Address ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:thoroughfare ;
+.
+dbl:locatorDesignator
+  a rdf:Property ;
+  rdfs:domain dbl:Address ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:locatorDesignator ;
+.
+dbl:locatorName
+  a rdf:Property ;
+  rdfs:domain dbl:Address ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:locatorName ;
+.
+dbl:postCode
+  a rdf:Property ;
+  rdfs:domain dbl:Address ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso dbl-term:postCode ;
+.
+
+# Properties (relations)
+
+dbl:cadastralParcel
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingOrBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:cadastralParcel ;
+.
+dbl:buildingUnit
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:buildingUnit ;
+.
+dbl:address
+  a rdf:Property ;
+  rdfs:domain dbl:BuildingORBuildingUnit ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:address ;
+.
+dbl:isDescribedByNativeBIM
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:isDescribedByNativeBIM ;
+.
+dbl:isDescribedByOpenBIM
+  a rdf:Property ;
+  rdfs:domain dbl:Building ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:isDescribedByOpenBIM ;
+.
+dbl:isDescribedByOpenGIS
+  a rdf:Property ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:isDescribedByOpenGIS ;
+.
+dbl:isDescribedByNativeGIS
+  a rdf:Property ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:isDescribedByNativeGIS ;
+.
+dbl:owner
+  a rdf:Property ;
+  rdfs:domain dbl:DBL-Root ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:owner ;
+.
+dbl:tenant
+  a rdf:Property ;
+  rdfs:domain dbl:DBL-Root ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:tenant ;
+.
+dbl:referencePoint
+  a rdf:Property ;
+  rdfs:domain dbl:CadastralParcel ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:referencePoint ;
+.
+dbl:geometry
+  a rdf:Property ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:geometry ;
+.
+dbl:horizontalGeometry
+  a rdf:Property ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:horizontalGeometry ;
+.
+dbl:horizontalGeometryReference
+  a rdf:Property ;
+  rdfs:domain dbl:HorizontalGeometryReferenceValue ;
+  rdfs:range sml:RelationReference ;
+  rdfs:seeAlso dbl-term:horizontalGeometryReference ;
+.
+
+# Property Groups for aspects
+
+dbl:Identification
+  a rdfs:Container ;
+  rdfs:seeAlso dbl-term:Identification ;
+  rdfs:member dbl:inspireId ;
+  rdfs:member dbl:geographicalName ;
+  rdfs:member dbl:nationalCadastralReference  ;
+.
+dbl:General
+  a rdfs:Container ;
+  rdfs:seeAlso dbl-term:General ;
+  rdfs:member dbl:cadastralParcel ;
+  rdfs:member dbl:buildingUnit ;
+  rdfs:member dbl:buildingNature ;
+  rdfs:member dbl:currentUse ;
+  rdfs:member dbl:address ;
+  rdfs:member wgs84_pos:location ;
+  rdfs:member locn:location ;
+  rdfs:member dbl:dateOfConstruction ;
+  rdfs:member dbl:dateOfRenovation ;
+  rdfs:member dbl:dateOfDemolition ;
+  rdfs:member dbl:isDescribedByNativeBIM ;
+  rdfs:member dbl:isDescribedByOpenBIM ;
+  rdfs:member dbl:isDescribedByNativeGIS ;
+  rdfs:member dbl:isDescribedByOpenGIS ;
+.
+dbl:Performance
+  a rdfs:Container ;
+  rdfs:seeAlso dbl-term:Performance ;
+  rdfs:member dbl:connectionToElectricity ;
+  rdfs:member dbl:connectionToGas ;
+  rdfs:member dbl:connectionToSewage ;
+  rdfs:member dbl:connectionToWater ;
+  rdfs:member dbl:energyPerformance ;
+  rdfs:member dbl:dateOfAssessment ;
+  rdfs:member dbl:assessmentMethod ;
+  rdfs:member dbl:circularityPerformance ;
+  rdfs:member dbl:smartReadinessIndicator ;
+  rdfs:member dbl:yearlyUseOfWater ;
+  rdfs:member dbl:yearlyReuseOfWater ;
+  rdfs:member dbl:yearlyUseOfGas ;
+  rdfs:member dbl:yearlyUseOfElectricity ;
+  rdfs:member dbl:internetDownloadBandwith ;
+  rdfs:member dbl:internetUploadBandwith ;
+  rdfs:member dbl:conditionOfConstruction ;
+.
+dbl:LegalAndFinance
+  a rdfs:Container ;
+  rdfs:seeAlso dbl-term:LegalAndFinance ;
+  rdfs:member dbl:owner ;
+  rdfs:member dbl:tenant ;
+  rdfs:member dbl:officialValue ;
+  rdfs:member dbl:officialValueReference ;
+  rdfs:member dbl:administrativeUnit ;
+  rdfs:member dbl:hasCleanSoilStatement ;
+.
+dbl:Dimensions
+  a rdfs:Container ;
+  rdfs:seeAlso dbl-term:Dimensions ;
+  rdfs:member dbl:officialArea ;
+  rdfs:member dbl:officialAreaReference ;
+  rdfs:member dbl:grossVolume ;
+  rdfs:member dbl:netVolume ;
+  rdfs:member dbl:elevation ;
+  rdfs:member dbl:elevationReference ;
+  rdfs:member dbl:footprint ;
+  rdfs:member dbl:heightAboveGround ;
+  rdfs:member dbl:heightBelowGround ;
+  rdfs:member dbl:heightReference ;
+  rdfs:member dbl:lowReference ;
+  rdfs:member dbl:heightStatus ;
+  rdfs:member dbl:roofType ;
+  rdfs:member dbl:areaValue ;
+  rdfs:member dbl:circumference ;
+  rdfs:member dbl:referencePoint ;
+  rdfs:member dbl:geometry ;
+  rdfs:member geo:hasGeometry ;
+  rdfs:member dbl:horizontalGeometry ;
+  rdfs:member dbl:horizontalGeometryReference ;
+.
+dbl:StructureAndMaterial
+  a rdfs:Container ;
+  rdfs:seeAlso dbl-term:StructureAndMaterial ;
+  rdfs:member dbl:numberOfRooms ;
+  rdfs:member dbl:numberOfBuildingUnits ;
+  rdfs:member dbl:numberOfDwellings ;
+  rdfs:member dbl:numberOfFloorsAboveGround ;
+  rdfs:member dbl:numberOfFloorsBelowGround ;
+  rdfs:member dbl:materialOfFacade ;
+  rdfs:member dbl:materialOfRoof ;
+  rdfs:member dbl:materialOfStructure ;
+  rdfs:member dbl:uValueFacades ;
+  rdfs:member dbl:uValueRoofs ;
+  rdfs:member dbl:uValueWindows ;
+  rdfs:member dbl:uValueFloors ;
+  rdfs:member dbl:numberOfBalconies ;
+  rdfs:member dbl:numberOfSwimmingPools ;
+  rdfs:member dbl:numberOfElevators ;
+. 
+dbl:BuildingServices
+  a rdfs:Container ;
+  rdfs:seeAlso dbl-term:BuildingServices ;
+  rdfs:member dbl:heatingSource ;
+  rdfs:member dbl:heatingSystem ;
+  rdfs:member dbl:ventilationSystem ;
+  rdfs:member dbl:solarSurfacePotential ;
+  rdfs:member dbl:solarSurfaceActual ;
+  rdfs:member dbl:renewableEnergyProduction ;
+  rdfs:member dbl:numberOfEVChargingPoints ;
+  rdfs:member dbl:kindOfCommunicationConnection ;
+.
+
+# Enumeration types
+
+dbl:OfficialValueReferenceValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:OfficialValueReferenceValue ;
+.
+dbl:OfficialAreaReferenceValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:OfficialAreaReferenceValue ;
+.
+dbl:CurrentUseValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:CurrentUseValue ;
+.
+dbl:EnergyPerformanceValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:EnergyPerformanceValue ;
+.
+dbl:CircularityPerformanceValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:CircularityPerformanceValue ;
+.
+dbl:SmartReadinessIndicatorValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:SmartReadinessIndicatorValue ;
+.
+dbl:HeatingSourceValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:HeatingSourceValue ;
+.
+dbl:HeatingSystemValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:HeatingSystemValue ;
+.
+dbl:VentilationSystemValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:VentilationSystemValue ; 
+.
+dbl:ElevationReferenceValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:ElevationReferenceValue ; 
+.
+dbl:HorizontalGeometryReferenceValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:HorizontalGeometryReferenceValue ; 
+.
+dbl:HeightStatusValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:HeightStatusValue ;
+.
+dbl:RoofTypeValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:RoofTypeValue ;
+.
+dbl:ConditionOfConstructionValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:ConditionOfConstructionValue ;
+.
+dbl:KindOfCommunicationConnectionValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:KindOfCommunicationConnectionValue ;
+.
+dbl:MaterialOfFacadeValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:MaterialOfFacadeValue ;
+.
+dbl:MaterialOfRoofValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:MaterialOfRoofValue ;
+.
+dbl:MaterialOfStructureValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:MaterialOfStructureValue ;
+.
+dbl:StatusValue
+  a sml:EnumerationType ;
+  rdfs:seeAlso dbl-term:StatusValue ;
+.
+
+# Reference individuals as allowed values for enumeration types
+
+dbl:As-required
+  a dbl:StatusValue ;
+  rdfs:seeAlso dbl-term:As-required ;
+.
+dbl:As-designed
+  a dbl:StatusValue ;
+  rdfs:seeAlso dbl-term:As-designed ;
+.
+dbl:As-built
+  a dbl:StatusValue ;
+  rdfs:seeAlso dbl-term:As-built ;
+.
+dbl:As-used
+  a dbl:StatusValue ;
+  rdfs:seeAlso dbl-term:As-used ;
+.
+dbl:TransactionPriceSimple
+  a dbl:OfficialValueReferenceValue ;
+  rdfs:seeAlso dbl-term:TransactionPriceSimple ;
+.
+dbl:TransactionPriceMedium
+  a dbl:OfficialValueReferenceValue ;
+  rdfs:seeAlso dbl-term:TransactionPriceMedium ;
+.
+dbl:TransactionPriceFull
+  a dbl:OfficialValueReferenceValue ;
+  rdfs:seeAlso dbl-term:TransactionPriceFull ;
+.
+dbl:RentalIncome
+  a dbl:OfficialValueReferenceValue ;
+  rdfs:seeAlso dbl-term:RentalIncome ;
+.
+dbl:ConstructedArea
+  a dbl:OfficialAreaReferenceValue ;
+  rdfs:seeAlso dbl-term:ConstructedArea ;
+.
+dbl:ExternalArea
+  a dbl:OfficialAreaReferenceValue ;
+  rdfs:seeAlso dbl-term:ExternalArea ;
+.
+dbl:InternalArea
+  a dbl:OfficialAreaReferenceValue ;
+  rdfs:seeAlso dbl-term:InternalArea ;
+.
+dbl:InternalPrimaryArea
+  a dbl:OfficialAreaReferenceValue ;
+  rdfs:seeAlso dbl-term:InternalPrimaryArea ;
+.
+dbl:InternalOtherArea
+  a dbl:OfficialAreaReferenceValue ;
+  rdfs:seeAlso dbl-term:InternalOtherArea ;
+.
+dbl:InternalResidualArea
+  a dbl:OfficialAreaReferenceValue ;
+  rdfs:seeAlso dbl-term:InternalResidualArea ;
+.
+dbl:InternalServiceArea
+  a dbl:OfficialAreaReferenceValue ;
+  rdfs:seeAlso dbl-term:InternalServiceArea ;
+.
+dbl:Residential
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:Residential ;
+.
+dbl:IndividualResidential
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:IndividualResidential ;
+.
+dbl:CollectiveResidential
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:CollectiveResidential ;
+.
+dbl:TwoDwellings
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:TwoDwellings ;
+.
+dbl:MoreThanTwoDwelling
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:MoreThanTwoDwellings ;
+.
+dbl:ResidenceForCommunities
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:ResidenceForCummunities ;
+.
+dbl:Agriculture
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:Agriculture ;
+.
+dbl:Industrial
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:Industrial ;
+.
+dbl:CommerceAndServices
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:CommerceAndServices ;
+.
+dbl:Office
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:Office ;
+.
+dbl:Trade
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:Trade ;
+.
+dbl:PublicServices
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:PublicServices ;
+.
+dbl:Ancillary
+  a dbl:CurrentUseValue ;
+  rdfs:seeAlso dbl-term:Ancillary ;
+.
+dbl:A
+  a dbl:EnergyPerformanceValue ;
+  rdfs:seeAlso dbl-term:A ;
+.
+dbl:B
+  a dbl:EnergyPerformanceValue ;
+  rdfs:seeAlso dbl-term:B ;
+.
+dbl:C
+  a dbl:EnergyPerformanceValue ;
+  rdfs:seeAlso dbl-term:C ;
+.
+dbl:D
+  a dbl:EnergyPerformanceValue ;
+  rdfs:seeAlso dbl-term:D ;
+.
+dbl:E
+  a dbl:EnergyPerformanceValue ;
+  rdfs:seeAlso dbl-term:E ;
+.
+dbl:F
+  a dbl:EnergyPerformanceValue ;
+  rdfs:seeAlso dbl-term:F ;
+.
+dbl:G
+  a dbl:EnergyPerformanceValue ;
+  rdfs:seeAlso dbl-term:G ;
+.
+dbl:CP1
+  a dbl:CircularityPerformanceValue ;
+  rdfs:seeAlso dbl-term:CP1 ;
+.
+dbl:CP2
+  a dbl:CircularityPerformanceValue ;
+  rdfs:seeAlso dbl-term:CP2 ;
+.
+dbl:CP3
+  a dbl:CircularityPerformanceValue ;
+  rdfs:seeAlso dbl-term:CP3 ;
+.
+dbl:SRI1
+  a dbl:SmartReadinessIndicatorValue ;
+  rdfs:seeAlso dbl-term:CSRI1 ;
+.
+dbl:SRI2
+  a dbl:SmartReadinessIndicatorValue ;
+  rdfs:seeAlso dbl-term:CSRI2 ;
+.
+dbl:SRI3
+  a dbl:SmartReadinessIndicatorValue ;
+  rdfs:seeAlso dbl-term:CSRI3 ;
+.
+dbl:Biogas
+  a dbl:HeatingSourceValue ;
+  rdfs:seeAlso dbl-term:Biogas ;
+.
+dbl:Electricity
+  a dbl:HeatingSourceValue ;
+  rdfs:seeAlso dbl-term:Electricity ;
+.
+dbl:LiquidFuels
+  a dbl:HeatingSourceValue ;
+  rdfs:seeAlso dbl-term:LiquidFuels ;
+.
+dbl:Naturalgas
+  a dbl:HeatingSourceValue ;
+  rdfs:seeAlso dbl-term:Naturalgas ;
+.
+dbl:SolidFuels
+  a dbl:HeatingSourceValue ;
+  rdfs:seeAlso dbl-term:SolidFuels ;
+.
+dbl:Straw
+  a dbl:HeatingSourceValue ;
+  rdfs:seeAlso dbl-term:Straw ;
+.
+dbl:WarmWaterOrSteam
+  a dbl:HeatingSourceValue ;
+  rdfs:seeAlso dbl-term:WarmwaterOrSteam ;
+.
+dbl:CentralHeating
+  a dbl:HeatingSystemValue ;
+  rdfs:seeAlso dbl-term:CentralHeating ;
+.
+dbl:DistrictHeating
+  a dbl:HeatingSystemValue ;
+  rdfs:seeAlso dbl-term:DistrictHeating ;
+.
+dbl:ElectricRadiators
+  a dbl:HeatingSystemValue ;
+  rdfs:seeAlso dbl-term:ElectricRadiators ;
+.
+dbl:HeatPump
+  a dbl:HeatingSystemValue ;
+  rdfs:seeAlso dbl-term:HeatPump ;
+.
+dbl:PortableGasHeating
+  a dbl:HeatingSystemValue ;
+  rdfs:seeAlso dbl-term:PortableGasHeating ;
+.
+dbl:SolarHeating
+  a dbl:HeatingSystemValue ;
+  rdfs:seeAlso dbl-term:SolarHeating ;
+.
+dbl:Stove
+  a dbl:HeatingSystemValue ;
+  rdfs:seeAlso dbl-term:Stove ;
+.
+dbl:Missing
+  a dbl:HeatingSystemValue, dbl:VentilationSystemValue ;
+  rdfs:seeAlso dbl-term:Missing ;
+.
+dbl:Natural
+  a dbl:VentilationSystemValue ;
+  rdfs:seeAlso dbl-term:Natural ;
+.
+dbl:Mechanical
+  a dbl:VentilationSystemValue ;
+  rdfs:seeAlso dbl-term:Mechanical ;
+.
+dbl:Hybrid
+  a dbl:VentilationSystemValue ;
+  rdfs:seeAlso dbl-term:Hybrid ;
+.
+dbl:Arch
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Arch ;
+.
+dbl:Bunker
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Bunker ;
+.
+dbl:Canopy
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Canopy ;
+.
+dbl:Castle
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Castle ;
+.
+dbl:CaveBuilding
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:CaveBuilding ;
+.
+dbl:Chapel
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Chapel ;
+.
+dbl:Church
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Church ;
+.
+dbl:Dam
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Dam ;
+.
+dbl:Greenhouse
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Greenhouse ;
+.
+dbl:Lighthouse
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Lighthouse ;
+.
+dbl:Mosque
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Mosque ;
+.
+dbl:Shed
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Shed ;
+.
+dbl:Silo
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Silo ;
+.
+dbl:Stadium
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Stadium ;
+.
+dbl:StorageTank
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:StorageTank ;
+.
+dbl:Synagogue
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Synagogue ;
+.
+dbl:Temple
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Temple ;
+.
+dbl:Tower
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Tower ;
+.
+dbl:Windmill
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:Windmill ;
+.
+dbl:WindTurbine
+  a dbl:BuildingNatureValue ;
+  rdfs:seeAlso dbl-term:WindTurbine ;
+.
+dbl:AboveGroundEnvelope
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:AboveGroundEnvelope ;
+.
+dbl:BottomOfConstruction
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:BottomOfConstruction ;
+.
+dbl:EntrancePoint
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:EntrancePoint ;
+.
+dbl:GeneralEave
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:GeneralEave ;
+.
+dbl:GeneralGround
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:GeneralGround ;
+.
+dbl:GeneralRoof
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:GeneralRoof ;
+.
+dbl:GeneralRoofEdge
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:GeneralRoofEdge ;
+.
+dbl:HighestEave
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:HighestEave ;
+.
+dbl:HighestGroundPoint
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:HighestGroundPoint ;
+.
+dbl:HighestPoint
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:HighestPoint ;
+.
+dbl:HighestRoofEdge
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:HighestRoofEdge ;
+.
+dbl:LowestEave
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:LowestEave ;
+.
+dbl:LowestFloorAboveGround
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:LowestFloorAboveGround ;
+.
+dbl:LowestGroundPoint
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:LowestGroundPoint ;
+.
+dbl:LowestRoofEdge
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:LowestRoofEdge ;
+.
+dbl:TopOfConstruction
+  a dbl:ElevationReferenceValue ;
+  rdfs:seeAlso dbl-term:TopOfConstruction ;
+.
+dbl:ArchRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:ArchRoof ;
+.
+dbl:ConicalRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:ConicalRoof ;
+.
+dbl:DomedRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:DomedRoof ;
+.
+dbl:DualPentRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:DualPentRoof ;
+.
+dbl:FlatRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:FlatRoof ;
+.
+dbl:GabledRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:GabledRoof ;
+.
+dbl:HalfHippedRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:HalfHippedRoof ;
+.
+dbl:HippedRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:HippedRoof ;
+.
+dbl:HyperbolicParabaloidalRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:HyperbolicParabaloidalRoof ;
+.
+dbl:MansardRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:MansardRoof ;
+.
+dbl:MonopitchRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:MonopitchRoof ;
+.
+dbl:PavilionRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:PavilionRoof ;
+.
+dbl:PyramidalBroachRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:PyramidalRoof ;
+.
+dbl:SawToothRoof
+  a dbl:RoofTypeValue ;
+  rdfs:seeAlso dbl-term:SawToothRoof ;
+.
+dbl:Declined
+  a dbl:ConditionOfConstructionValue ;
+  rdfs:seeAlso dbl-term:Declined ;
+.
+dbl:Functional
+  a dbl:ConditionOfConstructionValue ;
+  rdfs:seeAlso dbl-term:Functional ;
+.
+dbl:Demolished
+  a dbl:ConditionOfConstructionValue ;
+  rdfs:seeAlso dbl-term:Demolished ;
+.
+dbl:Projected
+  a dbl:ConditionOfConstructionValue ;
+  rdfs:seeAlso dbl-term:Projected ;
+.
+dbl:Ruin
+  a dbl:ConditionOfConstructionValue ;
+  rdfs:seeAlso dbl-term:Ruin ;
+.
+dbl:UnderConstruction
+  a dbl:ConditionOfConstructionValue ;
+  rdfs:seeAlso dbl-term:UnderConstruction ;
+.
+dbl:TelephoneLine
+  a dbl:KindOfCommunicationConnectionValue ;
+  rdfs:seeAlso dbl-term:TelephoneLine ;
+.
+dbl:Cable
+  a dbl:KindOfCommunicationConnectionValue ;
+  rdfs:seeAlso dbl-term:Cable ;
+.
+dbl:Optical
+  a dbl:KindOfCommunicationConnectionValue ;
+  rdfs:seeAlso dbl-term:Optical ;
+.
+dbl:WiFi
+  a dbl:KindOfCommunicationConnectionValue ;
+  rdfs:seeAlso dbl-term:Wifi ;
+.
+dbl:4G
+  a dbl:KindOfCommunicationConnectionValue ;
+  rdfs:seeAlso dbl-term:4G ;
+.
+dbl:5G
+  a dbl:KindOfCommunicationConnectionValue ;
+  rdfs:seeAlso dbl-term:5G ;
+.
+dbl:Adobe
+  a dbl:MaterialOfFacadeValue ;
+  rdfs:seeAlso dbl-term:Adobe ;
+.
+dbl:Asbestos
+  a dbl:MaterialOfFacadeValue ;
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:Asbestos ;
+.
+dbl:CeramicTiles
+  a dbl:MaterialOfFacadeValue ;
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:CeramicTiles ;
+.
+dbl:Composite
+  a dbl:MaterialOfFacadeValue ;
+  rdfs:seeAlso dbl-term:Composite ;
+.
+dbl:Concrete
+  a dbl:MaterialOfFacadeValue ;
+  rdfs:seeAlso dbl-term:Concrete ;
+.
+dbl:Glass
+  a dbl:MaterialOfFacadeValue ;
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:Glass ;
+.
+dbl:Limestone
+  a dbl:MaterialOfFacadeValue ;
+  rdfs:seeAlso dbl-term:Limestone ;
+.
+dbl:Masonry
+  a dbl:MaterialOfFacadeValue ;
+  rdfs:seeAlso dbl-term:Masonry ;
+.
+dbl:Metal
+  a dbl:MaterialOfFacadeValue ;
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:Metal ;
+.
+dbl:NaturalStone
+  a dbl:MaterialOfFacadeValue ;
+  rdfs:seeAlso dbl-term:NaturalStone ;
+.
+dbl:Vegetated
+  a dbl:MaterialOfFacadeValue ;
+  rdfs:seeAlso dbl-term:Vegtated ;
+.
+dbl:Wood
+  a dbl:MaterialOfFacadeValue ;
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:Wood ;
+.
+dbl:ClayTile
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:ClayTile ;
+.
+dbl:Composition
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:Composition ;
+.
+dbl:ConcreteTile
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:ConcreteTile ;
+.
+dbl:CurrugatedSheet
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:CurrugatedSheet ;
+.
+dbl:HotMoppedAsphalt
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:HotMoppedAsphalt ;
+.
+dbl:ReinforcedConcrete
+  a dbl:MaterialOfRoofValue ;
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:ReinforcedConcrete ;
+.
+dbl:Slate
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:Slate ;
+.
+dbl:Thatch
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:Thatch ;
+.
+dbl:VegtatedGreenRoof
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:VegtatedGreenRoof ;
+.
+dbl:WoodShinglesOrShakes
+  a dbl:MaterialOfRoofValue ;
+  rdfs:seeAlso dbl-term:WoodShinglesOrShakes ;
+.
+dbl:ReinforcedMasonry
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:ReinforcedMasonry ;
+.
+dbl:RubleStoneMasonry
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:RubleStoneMasonry ;
+.
+dbl:Steel
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:Steel ;
+.
+dbl:StoneMasonryBlock
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:StoneMasonryBlock ;
+.
+dbl:AdobeBlockWalls
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:AdobeBlockWalls ;
+.
+dbl:ConcreteBlockMasonry
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:ConcreteBlockMasonry ;
+.
+dbl:Earth
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:Earth ;
+.
+dbl:FiredBrickMasonry
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:FiredBrickMasonry ;
+.
+dbl:InformalConstructions
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:InformalConstructions ;
+.
+dbl:MassiveStoneMasonry
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:MassiveStomeMasonry ;
+.
+dbl:MobileHomes
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:MobilesHomes ;
+.
+dbl:MudWalls
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:MudWalls ;
+.
+dbl:PrecastConcrete
+  a dbl:MaterialOfStructureValue ;
+  rdfs:seeAlso dbl-term:PrecastConcrete ;
+.
+
+
+
